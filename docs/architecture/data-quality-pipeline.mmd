@@ -1,0 +1,18 @@
+flowchart LR
+    csv[CSV upload<br/>multipart] --> type{.csv name and<br/>allowed content type?}
+    type -->|no| e415[415]
+    type -->|yes| read[Read in chunks<br/>stop at size limit]
+    read -->|too large| e413a[413]
+    read --> parse[Decode UTF-8, parse with pandas]
+    parse -->|invalid| e422a[422 invalid CSV]
+    parse --> limits{Rows, columns,<br/>field length ok?}
+    limits -->|no| e413b[413]
+    limits --> analyze[Load trusted rules, profile, evaluate, score]
+    analyze -->|columns do not match rules| e422b[422 rules mismatch]
+    analyze --> cap{Issue count<br/>within limit?}
+    cap -->|no| e413c[413]
+    cap --> tx[Single transaction]
+    tx --> run[(Quality run)]
+    tx --> issues[(Quality issues)]
+    tx --> audit[(Audit event)]
+    tx -->|any failure| rb[Roll back everything]
