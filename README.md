@@ -53,8 +53,7 @@ The health link is a live check you can run yourself; a past healthy response do
 - [Documentation map](#documentation-map)
 - [Repository structure](#repository-structure)
 - [Validating this repository](#validating-this-repository)
-- [Known limitations of Datara](#known-limitations-of-datara)
-- [Roadmap](#roadmap)
+- [Roadmap & Future Enhancements](#roadmap--future-enhancements)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -262,19 +261,19 @@ Run `python scripts/validate_showcase.py` (no secrets, environment files or forb
 
 Both pass on the current contents. The `.mmd` sources in `docs/architecture/` render on GitHub and in any Mermaid editor; the images in `assets/diagrams/` are ready to use.
 
-## Known limitations of Datara
+## Roadmap & Future Enhancements
 
-- Workspace roles stored but not enforced — verify current authorization.
-- JWT audience (aud) and authorized-party (azp) claims not validated — verify current JWT validation.
-- Quality issues store offending cell values — still a potential data-privacy concern; verify.
-- Only catalog and quality screens are API-backed; other 11 screens are prototypes — recheck all screens.
-- CSV analysis is synchronous and in memory — verify current processing.
-- No CI/CD, structured logging, or metrics — check current deployment and monitoring setup.
-- Tests run on SQLite, not PostgreSQL — verify current test configuration.
+Datara is evolving toward a more comprehensive data governance and quality platform. Planned enhancements include:
 
-## Roadmap
+* **Expanded Platform Integration:** Connect additional portal modules to live backend APIs.
+* **Scalable Data Processing:** Explore background jobs and streaming-based processing for larger datasets.
+* **Enhanced Data Governance:** Continue improving workspace permissions, access controls, and sensitive-data handling.
+* **Automated Quality Assurance:** Expand automated testing across frontend workflows, backend APIs, and PostgreSQL integration.
+* **Operational Observability:** Introduce structured logging, application metrics, and improved error monitoring.
+* **Continuous Integration:** Strengthen automated validation and deployment workflows.
+* **Improved User Experience:** Continue refining dashboards, data exploration, and quality-reporting workflows.
 
-Planned, not implemented: role enforcement, evidence redaction by default, per-workspace rulesets, background processing for large files, PostgreSQL-backed tests with CI, structured logging and metrics, and more API-backed governance modules. See [ROADMAP.md](ROADMAP.md).
+These items represent potential future improvements, not claims that the functionality is already implemented. The roadmap may evolve as the platform develops. See [ROADMAP.md](ROADMAP.md).
 
 ## Contributing
 
