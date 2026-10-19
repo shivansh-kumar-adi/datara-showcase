@@ -1,0 +1,11 @@
+flowchart LR
+    push[Push or pull request] -.-> t1[Backend tests]
+    push -.-> t2[Frontend type check and tests]
+    push -.-> t3[Showcase validation scripts]
+    t1 -.-> gate{All green?}
+    t2 -.-> gate
+    t3 -.-> gate
+    gate -.->|yes| db[Migration check against a disposable PostgreSQL]
+    db -.-> deploy[Deploy frontend and backend]
+    gate -.->|no| stop[Block merge]
+    note[Proposed only: no CI is configured today]
