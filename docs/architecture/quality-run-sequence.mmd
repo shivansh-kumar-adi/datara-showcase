@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant U as User
+    participant F as Frontend
+    participant A as API
+    participant E as Quality engine
+    participant D as PostgreSQL
+    U->>F: Choose an asset and a CSV file
+    F->>A: POST quality run, multipart file
+    A->>A: Authenticate, check membership, load the asset
+    A->>A: Check file name, content type and size
+    A->>E: Parse CSV, check limits, analyze with server-side rules
+    E-->>A: Scores, profile, per-rule results, issues
+    A->>D: Begin transaction
+    A->>D: Insert quality run
+    A->>D: Insert quality issues
+    A->>D: Insert audit event
+    A->>D: Commit
+    A-->>F: 201 with the run and audit event ID
+    F->>A: GET run history, run detail and issues
+    A-->>F: Persisted results
+    F-->>U: Scores, rule results and filterable issues
