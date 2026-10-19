@@ -46,6 +46,7 @@ The health link is a live check you can run yourself; a past healthy response do
 - [Data model](#data-model)
 - [API summary](#api-summary)
 - [Engineering highlights](#engineering-highlights)
+- [Challenges I faced](#challenges-i-faced-while-building-datara)
 - [Testing evidence](#testing-evidence)
 - [Diagrams](#diagrams)
 - [Screenshots](#screenshots)
@@ -170,6 +171,26 @@ Versioned REST under `/api/v1`: health, onboarding, assets (list, create, read, 
 - A single typed API client in the frontend, with the backend's error format carried through to the UI.
 
 More in [engineering highlights](showcase/engineering-highlights.md) and [design decisions](docs/18-decisions-and-tradeoffs.md).
+
+## Challenges I faced while building Datara
+
+1. **Frontend design:** making the interface look like a real data-governance product, not a generic dashboard.
+2. **Frontend-backend integration:** connecting the UI to real API endpoints for assets, quality checks and results.
+3. **Backend architecture:** organizing routes, schemas, models, services and repositories into a maintainable structure.
+4. **Database connectivity:** setting up Neon PostgreSQL and resolving intermittent connection errors.
+5. **Migrations:** applying Alembic migrations in the right order and confirming the tables existed in production.
+6. **Deployment:** shipping to Vercel and Render, then fixing the backend's degraded health status.
+7. **Data persistence:** making sure assets and quality records survive a refresh instead of living only in frontend state.
+8. **Quality workflows:** integrating runs, dimensions and issues while handling invalid inputs and validation errors.
+9. **Environment variables:** keeping frontend, backend and database settings separate across local and production.
+10. **Multi-environment debugging:** telling local problems apart from deployment and database problems.
+11. **Verification:** testing real workflows instead of trusting a green build or a healthy API response.
+12. **Multiple project copies:** separating the official repositories from ZIPs, nested folders and working copies without overwriting changes.
+13. **GitHub and deployment safety:** finding the correct source of truth and avoiding unverified pushes that trigger production deploys.
+14. **Documentation:** writing separate, honest READMEs for the frontend, backend and showcase.
+15. **Unfinished work:** separating integrated features from prototype screens and listing security, authorization, logging and testing gaps.
+
+**The biggest challenge:** turning Datara from a UI and a pile of code into a working, deployed, database-connected product, which meant coordinating the frontend, backend, schema, environment variables, migrations and deployment together.
 
 ## Testing evidence
 
