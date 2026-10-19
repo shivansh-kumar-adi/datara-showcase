@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="280" viewBox="0 0 960 280" role="img" aria-labelledby="title desc">
+  <title id="title">Datara</title>
+  <desc id="desc">Datara geometric D mark and the slogan Know your data. Govern with confidence.</desc>
+  <rect width="960" height="280" rx="28" fill="#F5F2EB"/>
+  <path d="M92 54h88c78 0 124 38 124 86s-46 86-124 86H92v-48h84c47 0 74-14 74-38s-27-38-74-38H92z" fill="#111827"/>
+  <path d="M92 54v48h44c-13 10-22 23-27 38H63v-34H35V72h28V54z" fill="#D97757"/>
+  <rect x="35" y="153" width="28" height="28" rx="4" fill="#D97757"/>
+  <rect x="70" y="118" width="28" height="28" rx="4" fill="#D97757"/>
+  <rect x="70" y="188" width="28" height="28" rx="4" fill="#D97757"/>
+  <text x="340" y="158" font-family="Arial, Helvetica, sans-serif" font-size="112" font-weight="700" fill="#111827">Datara</text>
+  <text x="342" y="211" font-family="Arial, Helvetica, sans-serif" font-size="30" letter-spacing="1" fill="#4B5563">Know your data. Govern with confidence.</text>
+</svg>
+
