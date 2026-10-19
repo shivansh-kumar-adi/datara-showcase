@@ -1,0 +1,15 @@
+flowchart TD
+    visit([Visitor]) --> landing[Public landing page]
+    landing --> signin[Sign in or sign up<br/>Clerk]
+    landing --> access[Prototype access page]
+    signin --> gate{Portal route<br/>session valid?}
+    gate -->|no| signin
+    gate -->|yes| ws{Workspace exists?}
+    ws -->|no| onboard[Create organization and workspace]
+    ws -->|yes| portal[Portal shell]
+    onboard --> portal
+    portal --> catalog[Data catalog<br/>live API]
+    portal --> quality[Data quality<br/>live API]
+    portal --> proto[Overview, dictionary, glossary, lineage,<br/>policies, ownership, discovery, simulator,<br/>copilot, audit log, administration<br/>prototype]
+    catalog -->|API failure| err[Explicit error with retry]
+    quality -->|API failure| err
