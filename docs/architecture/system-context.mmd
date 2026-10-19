@@ -1,0 +1,16 @@
+flowchart LR
+    user([Data steward or analyst])
+    fe[Datara web application<br/>Next.js 16 and React 19<br/>hosted on Vercel]
+    api[Datara API<br/>FastAPI<br/>hosted on Render]
+    db[(PostgreSQL<br/>Neon, ap-southeast-1)]
+    engine[Quality engine<br/>pandas]
+    rules[Server-side YAML rules]
+    clerk[Clerk<br/>identity provider]
+
+    user --> fe
+    fe -->|REST, Bearer token, workspace header| api
+    api --> db
+    api --> engine
+    rules --> engine
+    fe -->|sign-in and sign-up| clerk
+    api -->|public signing keys| clerk
