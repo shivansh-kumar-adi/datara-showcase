@@ -1,0 +1,37 @@
+flowchart TB
+    subgraph Frontend[Frontend: Next.js]
+      landing[Public landing page]
+      gate[Route gate<br/>server-side session check]
+      portal[Portal shell<br/>navigation, onboarding, dialogs]
+      catalog[Catalog screens]
+      quality[Data quality screens]
+      proto[Prototype modules<br/>sample data]
+      client[Typed API client]
+      gate --> portal
+      portal --> catalog
+      portal --> quality
+      portal --> proto
+      catalog --> client
+      quality --> client
+    end
+    subgraph Backend[Backend: FastAPI]
+      mw[Request ID and CORS]
+      routes[Routes]
+      deps[Auth and membership checks]
+      services[Services<br/>transactions and audit events]
+      repos[Repositories<br/>workspace-scoped queries]
+      models[ORM models and migrations]
+      mw --> routes --> deps
+      routes --> services --> repos --> models
+    end
+    subgraph Engine[Quality engine]
+      loader[CSV and rules loader]
+      profiler[Profiler]
+      evaluator[Rule evaluator]
+      scorer[Scorer]
+      loader --> profiler
+      loader --> evaluator --> scorer
+    end
+    client -->|HTTPS REST| mw
+    services --> loader
+    models --> pg[(PostgreSQL)]
