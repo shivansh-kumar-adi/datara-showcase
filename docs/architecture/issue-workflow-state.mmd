@@ -1,0 +1,12 @@
+stateDiagram-v2
+    [*] --> open: issue created by a quality run
+    open --> in_progress: status changed
+    in_progress --> resolved: status changed or marked done
+    open --> resolved: marked done
+    resolved --> open: status changed
+    in_progress --> open: status changed
+    note right of open
+        Each change to status or assignee
+        writes an audit event.
+        A save with no change writes none.
+    end note
