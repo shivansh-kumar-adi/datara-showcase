@@ -1,0 +1,31 @@
+sequenceDiagram
+    participant U as User
+    participant F as Frontend
+    participant C as Clerk
+    participant A as FastAPI
+    participant J as Clerk signing keys
+    participant D as PostgreSQL
+    U->>F: Open a portal page
+    F->>C: Sign in if there is no session
+    C-->>F: Session
+    F->>A: Request with Bearer token and X-Workspace-ID
+    A->>J: Fetch signing key for the token (cached)
+    A->>A: Verify signature, issuer, expiry, issued-at, subject
+    alt token missing, invalid or expired
+        A-->>F: 401
+    else authentication not configured
+        A-->>F: 503
+    else workspace header missing
+        A-->>F: 400
+    else
+        A->>D: Look up membership for this user and workspace
+        alt member
+            D-->>A: Membership found
+            A->>D: Workspace-scoped query
+            A-->>F: 200 or 201
+        else workspace exists, user is not a member
+            A-->>F: 403
+        else workspace does not exist
+            A-->>F: 404
+        end
+    end
