@@ -1,0 +1,70 @@
+erDiagram
+    ORGANIZATIONS ||--o{ WORKSPACES : contains
+    WORKSPACES ||--o{ WORKSPACE_MEMBERSHIPS : has
+    WORKSPACES ||--o{ ASSETS : catalogs
+    WORKSPACES ||--o{ AUDIT_EVENTS : records
+    ASSETS ||--o{ QUALITY_RUNS : analyzed_by
+    QUALITY_RUNS ||--o{ QUALITY_ISSUES : contains
+
+    ORGANIZATIONS {
+      string id PK
+      string name
+      string slug UK
+    }
+    WORKSPACES {
+      string id PK
+      string organization_id FK
+      string name
+      string slug
+    }
+    WORKSPACE_MEMBERSHIPS {
+      string id PK
+      string workspace_id FK
+      string clerk_user_id
+      string role
+    }
+    ASSETS {
+      string id PK
+      string workspace_id FK
+      string name
+      string kind
+      string domain
+      string owner
+      int quality
+      string status
+      string sensitivity
+    }
+    QUALITY_RUNS {
+      string id PK
+      string workspace_id FK
+      string asset_id FK
+      string content_sha256
+      int row_count
+      int issue_count
+      float overall_score
+      json profile
+      json per_rule
+      json ruleset_snapshot
+    }
+    QUALITY_ISSUES {
+      string id PK
+      string quality_run_id FK
+      string asset_id FK
+      string workspace_id FK
+      int row_number
+      string rule
+      string dimension
+      string severity
+      string status
+      string assignee
+    }
+    AUDIT_EVENTS {
+      string id PK
+      string workspace_id FK
+      string action
+      string entity_type
+      string entity_id
+      string actor_id
+      json before
+      json after
+    }
