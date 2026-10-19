@@ -1,0 +1,21 @@
+flowchart TD
+    req[Incoming request] --> auth{Valid token?}
+    auth -->|missing or invalid| e401[401]
+    auth -->|auth not configured| e503[503]
+    auth -->|ok| hdr{Workspace header present?}
+    hdr -->|no| e400[400 workspace required]
+    hdr -->|yes| mem{Member of workspace?}
+    mem -->|workspace unknown| e404[404 workspace not found]
+    mem -->|not a member| e403[403 access denied]
+    mem -->|yes| val{Payload and query valid?}
+    val -->|no| e422[422 validation error with field errors]
+    val -->|yes| work[Run use case in a transaction]
+    work -->|constraint conflict| e409[409 conflict, rolled back]
+    work -->|resource missing in workspace| e404b[404 not found]
+    work -->|unexpected failure| rb[Rollback]
+    work -->|success| ok[200 or 201 with audit event ID]
+    e422 --> env[Standard error envelope<br/>code, message, field errors, request ID]
+    e409 --> env
+    e404 --> env
+    e403 --> env
+    e400 --> env
