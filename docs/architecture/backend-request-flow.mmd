@@ -1,0 +1,22 @@
+sequenceDiagram
+    participant UI as Frontend
+    participant MW as Middleware
+    participant R as Route
+    participant D as Dependencies
+    participant S as Service
+    participant Repo as Repository
+    participant DB as PostgreSQL
+    UI->>MW: Request with Bearer token and workspace header
+    MW->>MW: Attach request ID, apply CORS
+    MW->>R: Forward
+    R->>D: Verify token, check workspace membership
+    D->>DB: Membership lookup
+    D-->>R: Authorized workspace ID
+    R->>R: Validate payload and query parameters
+    R->>S: Invoke use case
+    S->>Repo: Workspace-scoped operation
+    Repo->>DB: Query or transaction
+    DB-->>Repo: Rows or constraint error
+    Repo-->>S: Result
+    S-->>R: Resource and audit event ID
+    R-->>UI: Typed response or error envelope
