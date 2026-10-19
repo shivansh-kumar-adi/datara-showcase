@@ -1,0 +1,81 @@
+openapi: 3.0.3
+info:
+  title: Datara API (documentation summary)
+  version: "0.1.0"
+  description: >
+    Human-written summary of the Datara API. The generated OpenAPI document served by the
+    API at /openapi.json is authoritative. Authenticated endpoints need a Bearer token;
+    workspace endpoints also need an X-Workspace-ID header.
+servers:
+  - url: https://datara-backend-gv91.onrender.com/api/v1
+paths:
+  /health:
+    get:
+      summary: API and database health (public)
+      responses:
+        "200": { description: API and database healthy }
+        "503": { description: Database unreachable (degraded) }
+  /onboarding:
+    get:
+      summary: The caller's organization, workspace and role
+      responses:
+        "200": { description: Workspace found }
+        "404": { description: Onboarding required }
+    post:
+      summary: Create organization, workspace and owner membership (returns existing workspace if present)
+      responses:
+        "201": { description: Created }
+        "200": { description: Existing workspace returned }
+        "422": { description: Invalid names }
+  /assets:
+    get:
+      summary: List assets (search, domain, cursor, limit 1-100)
+      responses:
+        "200": { description: Page of assets }
+    post:
+      summary: Create an asset and an audit event
+      responses:
+        "201": { description: Created }
+        "409": { description: Name already exists in the workspace }
+        "422": { description: Validation error }
+  /assets/{asset_id}:
+    get:
+      summary: Read an asset
+      responses:
+        "200": { description: Asset }
+        "404": { description: Not found in this workspace }
+    patch:
+      summary: Update an asset (at least one field) and write an audit event
+      responses:
+        "200": { description: Updated }
+        "409": { description: Name conflict }
+  /assets/{asset_id}/quality-runs:
+    post:
+      summary: Upload a CSV (multipart field "file") and run quality checks
+      responses:
+        "201": { description: Run saved with issues and audit event }
+        "413": { description: A size, row, column, field or issue limit was exceeded }
+        "415": { description: Unsupported file or media type }
+        "422": { description: Invalid CSV or columns do not match the rules }
+  /quality-runs:
+    get:
+      summary: List runs (optional asset_id, cursor, limit)
+      responses:
+        "200": { description: Page of runs }
+  /quality-runs/{run_id}:
+    get:
+      summary: Read a run with scores, profile and rule results
+      responses:
+        "200": { description: Run }
+        "404": { description: Not found in this workspace }
+  /quality-runs/{run_id}/issues:
+    get:
+      summary: List issues (dimension, severity, cursor, limit)
+      responses:
+        "200": { description: Page of issues }
+  /quality-issues/{issue_id}:
+    patch:
+      summary: Change an issue's status (open, in_progress, resolved) or assignee
+      responses:
+        "200": { description: Updated; an audit event is written only if something changed }
+        "404": { description: Not found in this workspace }
