@@ -1,0 +1,6 @@
+flowchart TD
+    pub[Public site<br/>home page] --> auth[Sign in or sign up<br/>Clerk]
+    pub --> access[Prototype access page]
+    auth --> live[Live, API-backed<br/>Data catalog and Data quality]
+    auth --> proto[Prototype, sample data<br/>Overview, dictionary, glossary, lineage,<br/>policies, ownership, discovery, simulator,<br/>copilot, audit log, administration]
+    other[Any other path] --> nf[Branded 404 page]
