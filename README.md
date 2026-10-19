@@ -243,13 +243,13 @@ Both pass on the current contents. The `.mmd` sources in `docs/architecture/` re
 
 ## Known limitations of Datara
 
-- Roles are stored on memberships but not enforced; every workspace member has the same access.
-- JWT audience and authorized-party claims are not validated.
-- Quality issues store the offending cell value, so uploaded data should be treated as sensitive.
-- Only the catalog and quality screens are API-backed; the other 11 portal screens are prototypes.
-- CSV analysis is synchronous and in memory.
-- No CI/CD, structured logging or metrics yet.
-- Tests run on SQLite, not PostgreSQL.
+- Workspace roles stored but not enforced — verify current authorization.
+- JWT audience (aud) and authorized-party (azp) claims not validated — verify current JWT validation.
+- Quality issues store offending cell values — still a potential data-privacy concern; verify.
+- Only catalog and quality screens are API-backed; other 11 screens are prototypes — recheck all screens.
+- CSV analysis is synchronous and in memory — verify current processing.
+- No CI/CD, structured logging, or metrics — check current deployment and monitoring setup.
+- Tests run on SQLite, not PostgreSQL — verify current test configuration.
 
 ## Roadmap
 
