@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant U as User
+    participant F as Frontend
+    participant A as API
+    participant D as PostgreSQL
+    U->>F: Open the portal after signing in
+    F->>A: GET onboarding
+    A->>D: Find a membership for this user
+    alt membership found
+        A-->>F: Organization, workspace and role
+    else none
+        A-->>F: 404 onboarding required
+        F-->>U: Ask for organization and workspace names
+        U->>F: Submit names
+        F->>A: POST onboarding
+        A->>D: Begin transaction
+        A->>D: Create organization
+        A->>D: Create workspace
+        A->>D: Create owner membership
+        A->>D: Commit
+        A-->>F: 201 with the new workspace
+    end
+    F->>F: Remember the workspace ID for later requests
