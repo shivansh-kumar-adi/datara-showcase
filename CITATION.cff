@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+title: "Datara Showcase"
+message: "If you reference this documentation, please cite it using this metadata."
+type: dataset
+authors:
+  - family-names: Kumar
+    given-names: Shivansh
+url: "https://shivanshonline.in"
+license: CC-BY-NC-ND-4.0
+date-released: 2026-10-19
+abstract: "Architecture, data model, API, design decisions and test evidence for Datara, a data governance platform."
