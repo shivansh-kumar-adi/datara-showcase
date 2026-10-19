@@ -1,0 +1,22 @@
+sequenceDiagram
+    participant U as User
+    participant F as Frontend
+    participant A as API
+    participant S as Service
+    participant D as PostgreSQL
+    U->>F: Fill in the asset form
+    F->>A: POST assets with token and workspace header
+    A->>A: Authenticate, check membership, validate fields
+    A->>S: Create asset
+    S->>D: Insert asset
+    S->>D: Insert audit event with the new state
+    alt name already exists in this workspace
+        D-->>S: Unique constraint violation
+        S->>D: Roll back
+        A-->>F: 409 asset name conflict
+        F-->>U: Show the message
+    else saved
+        S->>D: Commit both rows
+        A-->>F: 201 with asset and audit event ID
+        F-->>U: Refresh the catalog
+    end
