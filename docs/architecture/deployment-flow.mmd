@@ -1,0 +1,11 @@
+flowchart LR
+    dev([Developer]) -->|push| gh[GitHub repositories<br/>datara-platform and datara-backend]
+    gh -. deploy settings not verified .-> vercel[Vercel<br/>Next.js frontend]
+    gh -. deploy settings not verified .-> render[Render<br/>FastAPI web service]
+    user([User]) --> vercel
+    vercel -->|REST and Clerk token| render
+    render --> neon[(Neon PostgreSQL)]
+    vercel -->|sign-in| clerk[Clerk]
+    render -->|signing keys| clerk
+    env1[Environment variables<br/>set in the Vercel dashboard] --> vercel
+    env2[Environment variables<br/>set in the Render dashboard] --> render
